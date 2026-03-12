@@ -708,7 +708,9 @@ def decrypt_file(src_path: str, dst_path: str, config: dict,
         plaintext_blocks.append(plain)
         block_num += 1
 
-    os.makedirs(os.path.dirname(dst_path) if os.path.dirname(dst_path) else '.', exist_ok=True)
+    dst_dir = os.path.dirname(dst_path)
+    if dst_dir:
+        os.makedirs(dst_dir, exist_ok=True)
     with open(dst_path, 'wb') as f:
         f.write(b''.join(plaintext_blocks))
 
@@ -726,7 +728,9 @@ def encrypt_file(src_path: str, dst_path: str, config: dict,
     with open(src_path, 'rb') as f:
         plaintext = f.read()
 
-    os.makedirs(os.path.dirname(dst_path) if os.path.dirname(dst_path) else '.', exist_ok=True)
+    dst_dir = os.path.dirname(dst_path)
+    if dst_dir:
+        os.makedirs(dst_dir, exist_ok=True)
 
     if len(plaintext) == 0:
         with open(dst_path, 'wb') as f:
